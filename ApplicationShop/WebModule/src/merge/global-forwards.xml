@@ -1,0 +1,9 @@
+<global-forwards>
+    <forward name="ShowClients" path=".page.show.clients"/>
+    <forward name="ShowOrders" path=".page.show.orders"/>
+    <!--<forward name="NewOrderForm" path=".page.add.order"/>-->
+    <!--<forward name="NewClientForm" path=".page.add.client"/>-->
+    <forward name="Hello" path=".page.hello"/>
+    <!--<forward name="ShowClientsRedirect" path="/ShowClients.do"/>-->
+    <!--<forward name="ShowOrdersRedirect" path="/ShowOrders.do"/>]-->
+</global-forwards>

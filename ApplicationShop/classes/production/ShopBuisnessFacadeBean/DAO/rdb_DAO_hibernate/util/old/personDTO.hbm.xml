@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="DAO.rdb_DAO_hibernate.DTO.PersonDTO" table="PERSONS">
+        <id name="personID" column="person_id">
+            <generator class="native"/>
+        </id>
+
+        <many-to-one name="advicer" class="DAO.rdb_DAO_hibernate.DTO.PersonDTO"
+                     column="advicer" lazy="false"/>
+
+    <!--<many-to-one name = "advicer" class="DAO.rdb_DAO_hibernate.DTO.PersonDTO" column="person_id"/>-->
+        <!--<one-to-many name="advicer" class="DAO.rdb_DAO_hibernate.DTO.PersonDTO"-->
+                                           <!--column="person_id" not-null="true"-->
+                 <!--insert="false" update="false"/>-->
+        <!--<property name="advicer" unique="false" type="string"/>-->
+        
+        <property name="firstname" unique="false" type="string"/>
+        <property name="lastname" unique="false" type="string"/>
+    </class>
+</hibernate-mapping>

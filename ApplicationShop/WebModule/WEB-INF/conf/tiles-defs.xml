@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 1.3//EN"
+        "http://struts.apache.org/dtds/tiles-config_1_3.dtd">
+<tiles-definitions>
+    <definition name=".page.hello" path="/layout.jsp" controllerClass="HelloController">
+        <put name="title" value="Hello page"/>
+        <put name="body" value="/tiles/hello.jsp"/>
+    </definition>
+
+    <definition name=".page.show.clients" path="/layout.jsp" controllerClass="ShowClientsController">
+        <put name="title" value="Show clients"/>
+        <put name="body" value="/tiles/show_clients.jsp"/>
+    </definition>
+
+    <definition name=".page.show.orders" path="/layout.jsp" controllerClass="ShowOrdersController">
+        <put name="title" value="Show orders"/>
+        <put name="body" value="/tiles/show_orders.jsp"/>
+    </definition>
+
+    <definition name=".page.add.client" path="/layout.jsp" controllerClass="NewClientController">
+        <put name="title" value="Add new client"/>
+        <put name="body" value="/tiles/add_client.jsp"/>
+    </definition>
+
+    <definition name=".page.add.order" path="/layout.jsp" controllerClass="NewOrderController">
+        <put name="title" value="Add new order"/>
+        <put name="body" value="/tiles/add_order.jsp"/>
+    </definition>
+
+</tiles-definitions>

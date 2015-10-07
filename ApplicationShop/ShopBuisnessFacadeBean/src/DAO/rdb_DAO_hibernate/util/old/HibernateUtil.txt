@@ -1,0 +1,95 @@
+package DAO.rdb_DAO_hibernate.util;
+
+import javax.naming.InitialContext;
+
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
+/**
+ *
+ * @author Sergey Vishnyakov & Alexander Kirakozov
+ */
+public class HibUtil {
+    /**
+     * Initialize property
+     */
+    private static boolean isClient = false;
+
+    /**
+     * Session factory object
+     */
+    private static SessionFactory sessionFactory;
+
+    private static final ThreadLocal<Session> THREAD_LOCAL_SESSION = new ThreadLocal<Session>();
+
+    // private static final Session session;
+
+    /*
+     * static { try { // Create the SessionFactory from hibernate.cfg.xml //ctx =
+     * new InitialContext(); // sessionFactory = (SessionFactory) new
+     * InitialContext().lookup("java:/hibernate/SessionFactory"); InitialContext
+     * ctx = new InitialContext(); sessionFactory = (SessionFactory)
+     * ctx.lookup("java:/hibernate/SessionFactory"); // sessionFactory = new
+     * Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+     * session = sessionFactory.openSession(); sessionFactory = new
+     * Configuration().configure().buildSessionFactory(); session =
+     * sessionFactory.openSession(); } catch (Throwable ex) { // Make sure you
+     * log the exception, as it might be swallowed System.err.println("Initial
+     * SessionFactory creation failed." + ex); throw new
+     * ExceptionInInitializerError(ex); } }
+     */
+
+    /**
+     * Returns session factory object
+     */
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
+                if (isClient) {
+                    sessionFactory = new Configuration().configure()
+                            .buildSessionFactory();
+                } else {
+                    InitialContext ctx = new InitialContext();
+                    sessionFactory = (SessionFactory) ctx
+                            .lookup("java:/hibernate/SessionFactory");
+                }
+            } catch (Throwable ex) {
+                System.err.println("InitialSessionFactory creation failed."
+                        + ex);
+                throw new ExceptionInInitializerError(ex);
+            }
+        }
+        return sessionFactory;
+    }
+
+    public static void newSession() {
+        if (THREAD_LOCAL_SESSION.get() == null) {
+            Session session = getSessionFactory().openSession();
+            session.beginTransaction();
+            THREAD_LOCAL_SESSION.set(session);
+        }
+    }
+
+    public static Session getSession() {
+        return THREAD_LOCAL_SESSION.get();
+    }
+
+    public static void closeSession() {
+        Session session = getSession();
+        if (session != null) {
+            session.getTransaction().commit();
+            if (session.isOpen()) {
+                session.close();
+            }
+            THREAD_LOCAL_SESSION.set(null);
+        }
+    }
+
+   /**
+    * Sets initialize property for hibernate.
+    * If flag equals true than initialize hibernate for client,
+    * otherwise for server side.
+    */
+   public static void setIsClient(boolean flag) {
+        isClient = flag;
+    }
+}

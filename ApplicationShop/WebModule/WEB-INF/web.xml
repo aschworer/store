@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>MyRealm</realm-name>
+    </login-config>
+
+    <security-role>
+        <role-name>Supervisor</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>Salesman</role-name>
+    </security-role>
+    <filter>
+        <filter-name>LoggerFilter</filter-name>
+        <filter-class>LoggerFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>LoggerFilter</filter-name>
+        <servlet-name>action</servlet-name>
+    </filter-mapping>
+
+    <!--<context-param>-->
+    <!--<param-name>warehouseEmail</param-name>-->
+    <!--<param-value>Aigul.Zainullina@school.starsoftlabs.com</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+    <!--<param-name>weblogicUser</param-name>-->
+    <!--<param-value>me1</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+    <!--<param-name>weblogicPass</param-name>-->
+    <!--<param-value>welcomeme1</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+    <!--<param-name>weblogicShopDataSource</param-name>-->
+    <!--<param-value>ShopDataSource</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+    <!--<param-name>url</param-name>-->
+    <!--<param-value>jdbc:mysql://localhost:3306/shop</param-value>-->
+    <!--</context-param>-->
+
+    <servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>ApplicationActionServlet</servlet-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/conf/struts-config.xml</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>chainConfig</param-name>
+            <param-value>org/apache/struts/tiles/chain-config.xml</param-value>
+        </init-param>
+
+        <security-role-ref>
+            <role-name>Supervisor</role-name>
+            <role-link>Supervisor</role-link>
+        </security-role-ref>
+
+        <security-role-ref>
+            <role-name>Salesman</role-name>
+            <role-link>Salesman</role-link>
+        </security-role-ref>
+
+        <!--<init-param>-->
+        <!--<param-name>debug</param-name>-->
+        <!--<param-value>2</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+        <!--<param-name>detail</param-name>-->
+        <!--<param-value>2</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>SecurityFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <servlet-name>action</servlet-name>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>HTTPSessionListener</listener-class>
+    </listener>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>all</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Supervisor</role-name>
+            <role-name>Salesman</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <servlet>
+        <servlet-name>AddClientJSP</servlet-name>
+        <jsp-file>/add_client.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>AddOrderJSP</servlet-name>
+        <jsp-file>/add_order.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>HelloJSP</servlet-name>
+        <jsp-file>/hello.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>MenuJSP</servlet-name>
+        <jsp-file>/menu.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowClientsJSP</servlet-name>
+        <jsp-file>/show_clients.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowOrdersJSP</servlet-name>
+        <jsp-file>/show_orders.jsp</jsp-file>
+    </servlet>
+
+    <jsp-config>
+
+        <taglib>
+            <taglib-uri>/mytags</taglib-uri>
+            <taglib-location>/WEB-INF/tlds/mytld.tld</taglib-location>
+        </taglib>
+
+        <taglib>
+            <taglib-uri>/tags/struts-html</taglib-uri>
+            <taglib-location>/WEB-INF/tlds/struts-html.tld</taglib-location>
+        </taglib>
+
+        <taglib>
+            <taglib-uri>/tags/struts-bean</taglib-uri>
+            <taglib-location>/WEB-INF/tlds/struts-bean.tld</taglib-location>
+        </taglib>
+
+        <taglib>
+            <taglib-uri>/tags/struts-logic</taglib-uri>
+            <taglib-location>/WEB-INF/tlds/struts-logic.tld</taglib-location>
+        </taglib>
+
+        <taglib>
+            <taglib-uri>/tags/tiles</taglib-uri>
+            <taglib-location>/WEB-INF/tlds/struts-tiles.tld</taglib-location>
+        </taglib>
+
+        <!--<taglib>-->
+            <!--<taglib-uri>/tags/struts-logic</taglib-uri>-->
+            <!--<taglib-location>/WEB-INF/tlds/struts-logic.tld</taglib-location>-->
+        <!--</taglib>-->
+
+        <!--<jsp-property-group>-->
+            <!--<url-pattern>*.jsp</url-pattern>-->
+            <!--<el-ignored>false</el-ignored>-->
+            <!--<scripting-invalid>true</scripting-invalid>-->
+        <!--</jsp-property-group>-->
+
+    </jsp-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/page_not_found.jsp</location>
+    </error-page>
+    <!--<error-page>-->
+    <!--<error-code>500</error-code>-->
+    <!--<location>/exception.jsp</location>-->
+    <!--</error-page>-->
+</web-app>

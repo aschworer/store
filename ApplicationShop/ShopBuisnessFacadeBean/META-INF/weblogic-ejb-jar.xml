@@ -1,0 +1,39 @@
+<weblogic-ejb-jar xmlns="http://www.bea.com/ns/weblogic/90" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.bea.com/ns/weblogic/90
+                  http://www.bea.com/ns/weblogic/90/weblogic-ejb-jar.xsd">
+
+    <weblogic-enterprise-bean>
+        <ejb-name>ProcessOrderMDB</ejb-name>
+        <message-driven-descriptor>
+            <destination-jndi-name>shop</destination-jndi-name>
+            <connection-factory-jndi-name>ShopConnectionFactoryJNDI</connection-factory-jndi-name>
+        </message-driven-descriptor>
+        <jndi-name>ProcessOrderMDB</jndi-name>
+    </weblogic-enterprise-bean>
+
+    <weblogic-enterprise-bean>
+        <ejb-name>SendEmailMDB</ejb-name>
+        <message-driven-descriptor>
+            <destination-jndi-name>mail</destination-jndi-name>
+            <connection-factory-jndi-name>ShopConnectionFactoryJNDI</connection-factory-jndi-name>
+        </message-driven-descriptor>
+        <jndi-name>SendEmailMDB</jndi-name>
+    </weblogic-enterprise-bean>
+
+    <weblogic-enterprise-bean>
+        <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+        <stateless-session-descriptor>
+        </stateless-session-descriptor>
+        <!--<jndi-name>ShopBeanJNDIRemote</jndi-name>-->
+        <local-jndi-name>ShopBeanJNDILocal</local-jndi-name>
+    </weblogic-enterprise-bean>
+
+    <!--<weblogic-enterprise-bean>-->
+        <!--<ejb-name>ShopBuisnessFacadeRdb</ejb-name>-->
+        <!--<stateless-session-descriptor>-->
+        <!--</stateless-session-descriptor>-->
+        <!--<local-jndi-name>ShopBeanRdbJNDILocal</local-jndi-name>-->
+    <!--</weblogic-enterprise-bean>-->
+
+
+</weblogic-ejb-jar>

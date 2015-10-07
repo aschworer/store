@@ -1,0 +1,6 @@
+<global-exceptions>
+    <exception
+            type="exposed.BeanDatabaseException"
+            key="exception"
+            path="/exception.jsp"/>
+</global-exceptions>

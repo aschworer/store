@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="exposed.transfer_objects.OrderedProductDTO" table="ORDERED_PRODUCTS"
+            proxy="exposed.transfer_objects.OrderedProductDTO" lazy="true"
+            >
+
+        <!--<cache usage="read-write"/>-->
+        
+        <id name="id" column="id">
+            <generator class="native"/>
+        </id>
+        <many-to-one name="product" class="exposed.transfer_objects.ProductDTO"
+                                           column="product_id" not-null="true" lazy="proxy"/>
+        <many-to-one name="order" class="exposed.transfer_objects.OrderDTO"
+                                           column="order_id" not-null="true" lazy="proxy"/>
+        <property name="amount" unique="false" type="integer"/>
+
+    </class>
+</hibernate-mapping>

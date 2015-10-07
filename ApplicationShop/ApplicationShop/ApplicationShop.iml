@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4" relativePaths="true" type="J2EE_APPLICATION_MODULE">
+  <component name="AppServerSpecificValidatorsManager" />
+  <component name="ApplicationModuleBuildComponent">
+    <setting name="EXPLODED_URL" value="file://$MODULE_DIR$/../../../../../exploded" />
+    <setting name="EXPLODED_ENABLED" value="false" />
+    <setting name="JAR_URL" value="file://$MODULE_DIR$/../../../../../ApplicationShop.ear" />
+    <setting name="JAR_ENABLED" value="true" />
+    <setting name="SYNC_EXPLODED_DIR" value="true" />
+    <setting name="BUILD_MODULE_ON_FRAME_DEACTIVATION" value="false" />
+    <setting name="BUILD_EXTERNAL_DEPENDENCIES" value="false" />
+  </component>
+  <component name="ApplicationModuleProperties">
+    <containerElement type="module" name="ShopBuisnessFacadeBean">
+      <attribute name="method" value="4" />
+      <attribute name="URI" value="ShopBuisnessFacadeBean.jar" />
+      <attribute name="contextRoot" value="&lt;N/A&gt;" />
+    </containerElement>
+    <containerElement type="module" name="WebModule">
+      <attribute name="method" value="4" />
+      <attribute name="URI" value="WebModule.war" />
+      <attribute name="contextRoot" value="webapp" />
+    </containerElement>
+    <deploymentDescriptor name="application.xml" url="file://$MODULE_DIR$/META-INF/application.xml" optional="false" version="5" />
+    <deploymentDescriptor name="weblogic-application.xml" url="file://$MODULE_DIR$/META-INF/weblogic-application.xml" optional="false" version="9.x" />
+  </component>
+  <component name="ModuleRootManager" />
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <exploded url="file://$MODULE_DIR$/../../../../../exploded" />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/javaee.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="ShopBuisnessFacadeBean" />
+    <orderEntry type="module" module-name="WebModule" />
+    <orderEntryProperties />
+  </component>
+  <component name="WeblogicApplicationModuleProperties" />
+</module>
+

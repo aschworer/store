@@ -1,0 +1,180 @@
+BODY {
+    COLOR: #333333;
+    FONT-FAMILY: tahoma;
+    background: lightgreen;
+
+}
+/*
+
+TD {
+    FONT-SIZE: x-small;
+    COLOR: #333333;
+    LINE-HEIGHT: 1.3em;
+    FONT-FAMILY: tahoma
+}
+*/
+A {
+    font-weight:bold;
+    COLOR: #1936a1;
+    font-size:80%;
+}
+  /*
+A:hover {
+    COLOR: #910714
+}
+
+H1 {
+    COLOR: #910714
+}
+
+H2 {
+    COLOR: #910714
+}
+
+H3 {
+    COLOR: #910714
+}
+
+H4 {
+    COLOR: #910714
+}
+
+H5 {
+    COLOR: #910714
+}
+
+H6 {
+    COLOR: #910714
+}
+
+H1 {
+    MARGIN-TOP: 0px;
+    FONT-WEIGHT: normal;
+    FONT-SIZE: medium;
+    MARGIN-BOTTOM: 1.5em;
+    LINE-HEIGHT: 1.2em
+}
+
+H2 {
+    FONT-WEIGHT: bold;
+    FONT-SIZE: small
+}
+
+H3 {
+    FONT-WEIGHT: normal;
+    FONT-SIZE: small
+}
+
+H4 {
+    FONT-WEIGHT: normal;
+    FONT-SIZE: x-small;
+    MARGIN: 0px
+}
+
+H5 {
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 110%;
+    MARGIN: 0px
+}
+
+H6 {
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 70%;
+    MARGIN: 0.7em 0px -0.3em
+}
+
+.copy {
+    FONT-SIZE: 70%
+}
+
+.promo {
+    FONT-SIZE: 70%
+}
+
+.cont {
+    FONT-SIZE: 70%
+}
+
+.small {
+    FONT-SIZE: 70%
+}
+
+.bannertext {
+    MARGIN-TOP: 6px;
+    FONT-SIZE: 80%;
+    MARGIN-BOTTOM: 22px;
+    LINE-HEIGHT: 1.3em
+}
+
+.cont {
+    PADDING-BOTTOM: 28px;
+    PADDING-TOP: 16px;
+    BACKGROUND-COLOR: #ededed
+}
+
+.leftmenu TD {
+    PADDING-RIGHT: 30px;
+    PADDING-LEFT: 30px
+}
+
+.submenu TD {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    FONT-SIZE: 70%;
+    PADDING-BOTTOM: 0px;
+    PADDING-TOP: 0px
+}
+
+.date {
+    FONT-SIZE: 80%;
+    MARGIN: 0px;
+    COLOR: #910714
+}
+
+.promobannercell {
+    WIDTH: 100%;
+    TEXT-ALIGN: left
+}
+
+.pagelinks TD {
+    PADDING-RIGHT: 8px;
+    PADDING-LEFT: 8px;
+    PADDING-BOTTOM: 2px;
+    PADDING-TOP: 2px;
+    BACKGROUND-COLOR: #ededed
+}
+
+.pagelinks TD A {
+    COLOR: #910714;
+    TEXT-DECORATION: none
+}
+
+.pagelinks .wasted {
+    COLOR: #ffffff;
+    BACKGROUND-COLOR: #910714
+}
+
+.pagelinks_header {
+    FONT-SIZE: 75%;
+    MARGIN: 0px;
+    COLOR: #910714
+}
+
+.pagelinks2 {
+    COLOR: #910714;
+    BACKGROUND-COLOR: #ededed
+}
+
+.wasted2 {
+    COLOR: #ffffff;
+    BACKGROUND-COLOR: #910714
+}
+
+.vis {
+    DISPLAY: block
+}
+
+.invis {
+    DISPLAY: none
+}
+*/

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN" "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+  <!--
+    Define global validation config in validation-global.xml
+  -->
+  <formset>
+  <form name="AddClientForm">
+    <field property="lastname" depends="required,mask,minlength,maxlength">
+        <arg key="field.lastname" position="0" name="mask"/>
+        <arg key="field.lastname" position="0" name="required"/>
+        <arg key="field.lastname" position="0" name="minlength"/>
+        <arg key="field.lastname" position="0" name="maxlength"/>
+        <!--<arg key="${min}" position="0" name="maxlength"/>-->
+        <var>
+            <var-name>mask</var-name>
+            <var-value>^[a-zA-Z]*$</var-value>
+        </var>
+        <var>
+            <var-name>minlength</var-name>
+            <var-value>2</var-value>
+        </var>
+        <var>
+            <var-name>maxlength</var-name>
+            <var-value>30</var-value>
+        </var>
+    </field>
+    <!--[a-zA-Z]-->
+    <field property="firstname" depends="required,mask">
+        <arg key="field.firstname" position="0" name="mask"/>
+        <arg key="field.firstname" position="0" name="required"/>
+        <var>
+            <var-name>mask</var-name>
+            <var-value>^[a-zA-Z]*$</var-value>
+        </var>
+    </field>
+    <field property="advicer" depends="required, integer">
+        <arg key="field.clientID" position="0" name="integer"/>
+        <arg key="field.clientID" position="0" name="required"/>
+        <!--<arg key="field.clientID" position="0" name="intRange"/>-->
+    </field>
+</form>
+
+<form name="AddOrderForm">
+    <field property="status" depends="required">
+        <arg key="field.lastname" position="0" name="required"/>
+    </field>
+    <!--[a-zA-Z]-->
+    <field property="clientID" depends="required, integer">
+        <arg key="field.clientID" position="0" name="integer"/>
+        <arg key="field.clientID" position="0" name="required"/>
+        <!--<arg key="field.clientID" position="0" name="intRange"/>-->
+        <!--<var>-->
+        <!--<var-name>minlength</var-name>-->
+        <!--<var-value>5</var-value>-->
+        <!--</var>-->
+    </field>
+    <field property="amount" depends="integer, intRange"
+           indexedListProperty="products">
+        <var>
+            <var-name>min</var-name>
+            <var-value>0</var-value>
+        </var>
+        <var>
+            <var-name>max</var-name>
+            <var-value>10000</var-value>
+        </var>
+        <arg key="field.amount" position="0" name="integer"/>
+        <arg key="field.amount" position="0" name="intRange"/>
+        <arg key="${var:min}" position="1" name="intRange" resource="false"/>
+        <arg key="${var:max}" position="2" name="intRange" resource="false"/>
+    </field>
+</form>
+
+  </formset>
+</form-validation>

@@ -1,0 +1,22 @@
+<weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/90"
+                  xmlns:j2ee="http://java.sun.com/xml/ns/j2ee"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd
+                                      http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <jsp-descriptor>
+        <debug>true</debug>
+    </jsp-descriptor>
+    <context-root>WebModule</context-root>
+
+    <security-role-assignment>
+        <role-name>Supervisor</role-name>
+        <principal-name>me</principal-name>
+        <principal-name>admin</principal-name>
+    </security-role-assignment>
+
+    <security-role-assignment>
+        <role-name>Salesman</role-name>
+        <principal-name>default</principal-name>
+    </security-role-assignment>
+
+</weblogic-web-app>

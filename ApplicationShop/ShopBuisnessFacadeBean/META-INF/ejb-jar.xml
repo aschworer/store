@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+		  http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd"
+         version="2.1">
+
+    <enterprise-beans>
+        <message-driven>
+            <ejb-name>ProcessOrderMDB</ejb-name>
+            <ejb-class>ProcessOrderMDB</ejb-class>
+            <transaction-type>Container</transaction-type>
+            <message-destination-type>javax.jms.Queue</message-destination-type>
+
+        </message-driven>
+
+        <message-driven>
+            <ejb-name>SendEmailMDB</ejb-name>
+            <ejb-class>SendEmailMDB</ejb-class>
+            <transaction-type>Container</transaction-type>
+            <message-destination-type>javax.jms.Queue</message-destination-type>
+        </message-driven>
+
+        <session>
+            <display-name>ShopBuisnessFacade</display-name>
+            <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+            <!--<home>ShopBuisnessFacadeHome</home>-->
+            <!--<remote>ShopBuisnessFacade</remote>-->
+            <local-home>ShopBuisnessFacadeLocalHome</local-home>
+            <local>ShopBuisnessFacadeLocal</local>
+            <ejb-class>ShopBuisnessFacadeBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+
+        <!--<session>-->
+            <!--<display-name>ShopBuisnessFacadeRdb</display-name>-->
+            <!--<ejb-name>ShopBuisnessFacadeRdb</ejb-name>-->
+            <!--<local-home>ShopBuisnessFacadeRdbHome</local-home>-->
+            <!--<local>ShopBuisnessFacadeRdbLocal</local>-->
+            <!--<ejb-class>ShopBuisnessFacadeRdb</ejb-class>-->
+            <!--<session-type>Stateless</session-type>-->
+            <!--<transaction-type>Container</transaction-type>-->
+        <!--</session>-->
+
+    </enterprise-beans>
+
+
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>SendEmailMDB</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Supports</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ProcessOrderMDB</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Supports</trans-attribute>
+        </container-transaction>
+
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>addCustomerHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>addOrderHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>create</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>decreaseProductsHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>getCustomersHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>getProductsHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>getReport</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>processOrderHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>refillWarehouseHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>sendEmailHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>getOrdersHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>getOrdersDates</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>getCustomersCount</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <container-transaction>
+            <method>
+                <ejb-name>ShopBuisnessFacadeBean</ejb-name>
+                <method-name>mailNeededHib</method-name>
+            </method>
+            <trans-attribute>RequiresNew</trans-attribute>
+        </container-transaction>
+
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>getOrdersHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>RequiresNew</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>getProductsHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>RequiresNew</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>addCustomerHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>RequiresNew</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>addOrderHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>RequiresNew</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+<!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>getCustomersHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>RequiresNew</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>decreaseProductsHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>RequiresNew</trans-attribute>-->
+        <!--</container-transaction>-->
+        <!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>getReport</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>Required</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+        <!--<container-transaction>-->
+            <!--<method>-->
+                <!--<ejb-name>ShopBuisnessFacadeBean</ejb-name>-->
+                <!--<method-name>processOrderHib</method-name>-->
+            <!--</method>-->
+            <!--<trans-attribute>Required</trans-attribute>-->
+        <!--</container-transaction>-->
+<!---->
+    </assembly-descriptor>
+</ejb-jar>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<!-- Generated file - Do not edit! -->
+
+<hibernate-configuration>
+
+    <!-- a SessionFactory instance listed as /jndi/name -->
+    <session-factory name="HibernateFactory">
+    <!--<property name="show_sql">true</property>-->
+    <!-- properties -->
+    <!--<property name="format_sql">true</property>-->
+
+    <property name="connection.datasource">ShopDataSource</property>
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+    <!--<property name="use_outer_join">false</property>-->
+    <property name="hibernate.transaction.factory_class">
+        org.hibernate.transaction.JTATransactionFactory
+    </property>
+    <property name="transaction.manager_lookup_class">
+        org.hibernate.transaction.WeblogicTransactionManagerLookup
+    </property>
+
+    <!--<property name="cache.provider_class">-->
+        <!--org.hibernate.cache.EhCacheProvider-->
+    <!--</property>-->
+    <!--<property name="current_session_context_class">thread</property>-->
+
+    <!-- mapping files -->
+    <mapping resource="/DAO/rdb_DAO_hibernate/util/customerDTO.hbm.xml"/>
+    <mapping resource="/DAO/rdb_DAO_hibernate/util/oProductDTO.hbm.xml"/>
+    <mapping resource="/DAO/rdb_DAO_hibernate/util/orderDTO.hbm.xml"/>
+    <mapping resource="/DAO/rdb_DAO_hibernate/util/productDTO.hbm.xml"/>
+
+    <!--<class-cache-->
+            <!--class="exposed.transfer_objects.ProductDTO"-->
+            <!--usage="read-only"/>-->
+    <!--<collection-cache-->
+    <!--collection="org.hibernate.auction.model.Item.bids"-->
+    <!--usage="transactional"/>-->
+    </session-factory>
+
+</hibernate-configuration>

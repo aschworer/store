@@ -1,0 +1,123 @@
+package DAO.rdb_DAO_hibernate.util;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.naming.Context;
+
+public class HibernateUtil {
+//    private static final ThreadLocal threadSession =
+//            new ThreadLocal();
+//    private static final ThreadLocal threadTransaction =
+//            new ThreadLocal();
+//    private static final SessionFactory sessionFactory;
+
+    static {
+        try {
+            new Configuration().
+                    configure("/DAO/rdb_DAO_hibernate/util/hibernate.cfg.xml.txt").
+                    buildSessionFactory();
+//             sessionFactory = getSessionFactory();
+        } catch (Throwable ex) {
+            ex.printStackTrace(System.out);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        SessionFactory sessions = null;
+        try {
+            Context ctx = new InitialContext();
+            String jndiName = "HibernateFactory";
+            sessions = (SessionFactory) ctx.lookup(jndiName);
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        }
+        return sessions;
+    }
+
+    public static Session getSession() {
+//        Session s = (Session) threadSession.get();
+// Open a new Session, if this thread has none yet
+//        try {
+//        return sessionFactory.openSession();
+        return getSessionFactory().getCurrentSession();
+//            System.out.println("closed");
+//            return sessionFactory.openSession();
+//        }
+//        return sessionFactory.getCurrentSession();
+//        if (s == null) {
+//                System.out.println("s=null");
+//            s = getSessionFactory().openSession();
+//                getSessionFactory().openSession();
+//            threadSession.set(s);
+//        }
+//        } catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            throw new InfrastructureException(ex);
+        }
+//        return s;
+
+
+
+//    public static Session getNewSession() {
+//        return getSessionFactory().openSession();
+//    }
+
+//    public static void closeSession() {
+//        try {
+//        Session s = (Session) threadSession.get();
+//        threadSession.set(null);
+//        if (s != null && s.isOpen())
+//            s.close();
+//        } catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            throw new InfrastructureException(ex);
+//        }
+    }
+
+//    public static void beginTransaction() {
+//        Transaction tx = (Transaction) threadTransaction.get();
+//        try {
+//        if (tx == null) {
+//            tx = getSession().beginTransaction();
+//            threadTransaction.set(tx);
+//        }
+//        } catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            throw new InfrastructureException(ex);
+//        }
+//    }
+
+//    public static void commitTransaction() {
+//        Transaction tx = (Transaction) threadTransaction.get();
+//        try {
+//        if (tx != null && !tx.wasCommitted()
+//                && !tx.wasRolledBack())
+//            tx.commit();
+//        threadTransaction.set(null);
+//        } catch (HibernateException ex) {
+//            rollbackTransaction();
+//            ex.printStackTrace();
+//            throw new InfrastructureException(ex);
+//        }
+//    }
+
+//    public static void rollbackTransaction() {
+//        Transaction tx = (Transaction) threadTransaction.get();
+//        try {
+//        threadTransaction.set(null);
+//        if (tx != null && !tx.wasCommitted()
+//                && !tx.wasRolledBack()) {
+//            tx.rollback();
+//        }
+//        } catch (HibernateException ex) {
+//            ex.printStackTrace();
+//            throw new InfrastructureException(ex);
+//        } finally {
+//            closeSession();
+//        }
+//    }

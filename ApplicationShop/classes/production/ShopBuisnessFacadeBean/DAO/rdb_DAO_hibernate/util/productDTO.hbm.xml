@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="exposed.transfer_objects.ProductDTO" table="PRODUCTS"
+        proxy="exposed.transfer_objects.ProductDTO" lazy="true"
+           >
+        <!--<cache usage="read-only"/>-->
+        <id name="productID" column="product_id">
+            <generator class="native"/>
+        </id>
+        <property name="title" unique="false" type="string"/>
+        <property name="price" unique="false" type="double"/>
+        <property name="warehouseAmount" unique="false" type="integer"
+                  column="warehouse_amount"/>
+        <property name="lastFill" unique="false" type="long" column="last_fill"/>
+        <property name="lastMail" unique="false" type="long" column="last_mail"/>
+    </class>
+</hibernate-mapping>

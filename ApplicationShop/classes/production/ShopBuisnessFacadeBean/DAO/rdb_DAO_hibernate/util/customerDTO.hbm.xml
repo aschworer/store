@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="exposed.transfer_objects.CustomerDTO" table="customers"
+           lazy="true" proxy = "exposed.transfer_objects.CustomerDTO"
+            >
+
+        <!--<cache usage="read-write"/>-->
+        
+        <id name="personID" column="id">
+            <generator class="native"/>
+        </id>
+        <discriminator
+                column="discriminator"
+                type="string"/>
+
+        <many-to-one name="advicer" class="exposed.transfer_objects.CustomerDTO"
+                     column="advicer" lazy="false"/>
+        <property name="firstname" unique="false" type="string"/>
+        <property name="lastname" unique="false" type="string"/>
+        <property name="type" unique="false" type="string" column="discriminator" insert="false" update="false"/>
+        <property name="discription" unique="false"
+                  type="DAO.rdb_DAO_hibernate.user_types.CustomerDiscriptionUserType"/>
+        <!--<property name="companyName" unique="false" type="string"/>-->
+
+        <subclass
+                name="exposed.transfer_objects.BuisnessCustomerDTO"
+                discriminator-value="Buisness">
+            <property
+                    name="companyName"
+                    column="companyName"/>
+        </subclass>
+        
+        <subclass
+                name="exposed.transfer_objects.PersonalCustomerDTO"
+                discriminator-value="Personal">
+        </subclass>
+    </class>
+</hibernate-mapping>

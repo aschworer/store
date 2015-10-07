@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="exposed.transfer_objects.OrderDTO" table="ORDERS"
+            proxy="exposed.transfer_objects.OrderDTO" lazy="true"
+            >
+
+        
+        <id name="orderID" column="order_id">
+            <generator class="native"/>
+        </id>
+
+        <many-to-one name="client" class="exposed.transfer_objects.CustomerDTO"
+                     column="person_id" not-null="true" lazy="proxy"
+                />
+
+        <property name="orderDate" unique="false" type="date" column="order_date"/>
+        <property name="orderStatus" type="DAO.rdb_DAO_hibernate.user_types.StatusUserType"
+                  unique="false" column="order_status"/>
+
+        <set name="orderedProducts" table="ORDERED_PRODUCTS" lazy="true">
+
+            <!--<cache usage="read-only"/>-->
+
+            <key column="order_id"/>
+            <one-to-many class="exposed.transfer_objects.OrderedProductDTO"/>
+
+            <!--<key>-->
+                <!--<column name="order_id"/>-->
+            <!--</key>-->
+            <!--<many-to-many class="exposed.transfer_objects.OrderedProductDTO">-->
+            <!--<column name="product_id"/>-->
+            <!--</many-to-many>-->
+        </set>
+
+        <filter name="filterByDate" condition="order_date =:date"/>
+        <!--inverse="true|false"-->
+        <!--cascade="all|none|save-update|delete|all-delete-orphan|delet(6)e-orphan"-->
+        <!--sort="unsorted|natural|comparatorClass"-->
+        <!--order-by="column_name asc|desc"-->
+        <!--where="arbitrary sql where condition"-->
+        <!--fetch="join|select|subselect"-->
+        <!--batch-size="N"-->
+        <!--access="field|property|ClassName"-->
+        <!--optimistic-lock="true|false"-->
+        <!--mutable="true|false"-->
+        <!--node="element-name|."-->
+        <!--embed-xml="true|false"-->
+    </class>
+    <filter-def name="filterByDate">
+            <filter-param name="date" type="date"/>
+        </filter-def>
+
+</hibernate-mapping>

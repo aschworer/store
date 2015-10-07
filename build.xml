@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="appear" default="all">
+
+    <dirname property="application.root.dir" file="${ant.file}"/>
+    <property file="${application.root.dir}/build.properties"/>
+
+
+    <property name="lib.xdoclet.dir" value="${application.root.dir}/ant_build/xdoclet-1.2.3/lib"/>
+    <property name="bean.filename" value="ShopBuisnessFacadeBean.java"/>
+    <property name="ear.application.filename" value="ApplicationShop.ear"/>
+    <property name="webmodule.bean.interfaces.dir"
+              value="${application.root.dir}/WebModule/src/exposed/shopbuisnessfacade_interfaces"/>
+
+    <taskdef name="ejbdoclet"
+             classpathref="classpath"
+             classname="xdoclet.modules.ejb.EjbDocletTask"
+            />
+
+    <target name="ejbdoclet">
+        <path id="classpath">
+            <fileset dir="${lib.xdoclet.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            <fileset dir="${application.root.dir}\ShopBuisnessFacadeBean\META-INF\lib">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+
+
+        <ejbdoclet
+                destdir="${application.root.dir}/ShopBuisnessFacadeBean/src/exposed/shopbiusnessfacade_interfaces"
+                ejbspec="2.1"
+                force="true"
+                >
+            <fileset dir="${application.root.dir}/ShopBuisnessFacadeBean/src">
+                <!--<include name="*.java"/>-->
+                <include name="ShopBuisnessFacadeBean.java"/>
+            </fileset>
+            <!--<remoteinterface/>-->
+            <localinterface/>
+            <!--<homeinterface/>-->
+            <localhomeinterface/>
+            <!--<deploymentdescriptor-->
+            <!--destdir="c:\"-->
+            <!--validatexml="true"-->
+            <!-->-->
+            <!---->
+            <!--</deploymentdescriptor>-->
+            <!--<weblogic-->
+            <!--xmlencoding="UTF-8"-->
+            <!--destdir="c:\"-->
+            <!--validatexml="true"-->
+            <!--datasource="java:/samplesDataSource"-->
+            <!--persistence="weblogic"-->
+            <!--/>-->
+
+
+        </ejbdoclet>
+    </target>
+
+    <taskdef name="webdoclet"
+             classname="xdoclet.modules.web.WebDocletTask"
+
+             classpathref="classpath"
+            />
+
+    <target name="webdoclet">
+        <webdoclet
+                force="true"
+                destdir="${application.root.dir}/WebModule/WEB-INF/conf"
+                mergeDir="${application.root.dir}/WebModule/src/merge"
+                verbose="false"
+                >
+
+            <fileset dir="${application.root.dir}/WebModule/src">
+                <include name="**/*Servlet.java"/>
+                <include name="**/*Action.java"/>
+                <include name="**/*Form.java"/>
+                <include name="**/*Exception.java"/>
+            </fileset>
+
+            <strutsconfigxml
+                    destdir="${application.root.dir}/WebModule/WEB-INF/conf"
+                    version="1.2"
+                    />
+
+            <strutsvalidationxml
+                    destdir="${application.root.dir}/WebModule/WEB-INF/conf"
+                    version="1.2"
+                    />
+
+            <!---->
+            <!--<deploymentdescriptor-->
+            <!--servletspec="2.3"-->
+            <!--destdir="c:\"-->
+            <!-->-->
+            <!--<taglib-->
+            <!--uri="http://java.sun.com/jstl/ea/core"-->
+            <!--location="/WEB-INF/c.tld"-->
+            <!--/>-->
+            <!--<contextparam-->
+            <!--name="foobar1"-->
+            <!--value="a test value"-->
+            <!--description="context parameter with a description"-->
+            <!--/>-->
+            <!--<contextparam-->
+            <!--name="foobar2"-->
+            <!--value="another test value"-->
+            <!--/>-->
+            <!--</deploymentdescriptor>-->
+            <!--<weblogicwebxml-->
+            <!--destdir="c:\"-->
+            <!--validateXml="true"-->
+            <!--/>-->
+            <!--<webWorkConfigProperties/>-->
+            <!--<webWorkActionDocs javadocdir="api" mergedir="${samples.merge.dir}"/>-->
+            <!--<facesconfigxml destdir="${samples.web-inf.dir}" mergedir="${samples.merge.dir}"/>-->
+        </webdoclet>
+    </target>
+
+    <target name="renew.bean.interfaces" depends="ejbdoclet" description="Copying bean interfaces into WebModule"/>
+    <copy todir="${webmodule.bean.interfaces.dir}">
+        <fileset dir="${application.root.dir}/ShopBuisnessFacadeBean/src/exposed/shopbiusnessfacade_interfaces">
+            <type type="file"/>
+        </fileset>
+    </copy>
+
+
+    <taskdef name="hibernatedoclet"
+             classpathref="classpath"
+             classname="xdoclet.modules.hibernate.HibernateDocletTask"
+            />
+    <!-- =================================================================== -->
+    <!-- Invoke XDoclet's hibernate                                          -->
+    <!-- =================================================================== -->
+    <target name="hibernatedoclet">
+
+        <hibernatedoclet
+                force="true"
+                destdir="${application.root.dir}\ShopBuisnessFacadeBean\src\DAO\rdb_DAO_hibernate\util\docl"
+                verbose="false">
+
+            <fileset dir="${application.root.dir}/ShopBuisnessFacadeBean/src">
+                <include name="exposed/transfer_objects/**/*.java"/>
+            </fileset>
+
+            <hibernate version="3.0"/>
+
+            <hibernatecfg
+                    version="3.0"
+                    dialect="org.hibernate.dialect.MySQLDialect"
+                    dataSource="ShopDataSource"
+                    transactionManagerLookup="org.hibernate.transaction.JTATransactionFactory"
+                    transactionManagerFactory="org.hibernate.transaction.org.hibernate.transaction.WeblogicTransactionManagerLookup"
+                    >
+                <otherMapping name="resource" value="/DAO/rdb_DAO_hibernate/util/customerDTO.hbm.xml"/>
+                <otherMapping name="resource" value="/DAO/rdb_DAO_hibernate/util/oProductDTO.hbm.xml"/>
+                <otherMapping name="resource" value="/DAO/rdb_DAO_hibernate/util/orderDTO.hbm.xml"/>
+                <otherMapping name="resource" value="/DAO/rdb_DAO_hibernate/util/productDTO.hbm.xml"/>
+            </hibernatecfg>
+
+            <!--<factoryclass-->
+            <!--factoryClass="HibernateFactory"-->
+            <!--dataSource="ShopDataSource"-->
+            <!--/>-->
+
+
+            <!--<hibernate-configuration>-->
+            <!--<session-factory name="HibernateFactory">-->
+            <!--<property name="show_sql">true</property>-->
+            <!--<property name="connection.datasource">ShopDataSource</property>-->
+            <!--<property name="dialect">-->
+            <!--org.hibernate.dialect.MySQLDialect-->
+            <!--</property>-->
+            <!--<property name="hibernate.transaction.factory_class">-->
+            <!--org.hibernate.transaction.JTATransactionFactory</property>-->
+            <!--<property name="current_session_context_class">thread</property>-->
+            <!--<mapping resource="/DAO/rdb_DAO_hibernate/util/oProductDTO.hbm.xml"/>-->
+            <!--<mapping resource="/DAO/rdb_DAO_hibernate/util/orderDTO.hbm.xml"/>-->
+            <!--<mapping resource="/DAO/rdb_DAO_hibernate/util/productDTO.hbm.xml"/>-->
+            <!--<mapping resource="/DAO/rdb_DAO_hibernate/util/customerDTO.hbm.xml"/>-->
+            <!--</session-factory>-->
+            <!--</hibernate-configuration>-->
+
+
+        </hibernatedoclet>
+
+
+    </target>
+
+
+    <!-- Compiler options -->
+
+
+    <property name="compiler.debug" value="on"/>
+    <property name="compiler.generate.no.warnings" value="off"/>
+    <property name="compiler.args" value=""/>
+    <property name="compiler.max.memory" value="128m"/>
+
+    <!-- Application Server Libraries -->
+
+    <!-- Modules -->
+
+    <!-- Module ShopBuisnessFacadeBean -->
+
+    <property name="compiler.args.shopbuisnessfacadebean" value="${compiler.args}"/>
+
+    <property name="shopbuisnessfacadebean.output.dir"
+              value="${application.root.dir}/classes/production/ShopBuisnessFacadeBean"/>
+    <property name="shopbuisnessfacadebean.testoutput.dir"
+              value="${application.root.dir}/classes/test/ShopBuisnessFacadeBean"/>
+
+    <path id="shopbuisnessfacadebean.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="shopbuisnessfacadebean.module.classpath">
+        <fileset dir="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+
+        <fileset dir="${application.root.dir}/ShopBuisnessFacadeBean">
+            <include name="*.jar"/>
+        </fileset>
+
+
+        <!--<pathelement location="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/lib/j2ee.jar"/>-->
+    </path>
+
+    <path id="shopbuisnessfacadebean.module.sourcepath">
+        <dirset dir="${application.root.dir}/ShopBuisnessFacadeBean">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.shopbuisnessfacadebean"
+            depends="compile.module.shopbuisnessfacadebean.production,
+            compile.module.shopbuisnessfacadebean.tests"
+            description="Compile module ShopBuisnessFacadeBean"/>
+
+    <target name="compile.module.shopbuisnessfacadebean.production"
+            description="Compile module ShopBuisnessFacadeBean; production classes">
+        <mkdir dir="${shopbuisnessfacadebean.output.dir}"/>
+        <javac destdir="${shopbuisnessfacadebean.output.dir}" debug="${compiler.debug}"
+               nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+            <compilerarg line="${compiler.args.shopbuisnessfacadebean}"/>
+            <bootclasspath refid="shopbuisnessfacadebean.module.bootclasspath"/>
+            <classpath refid="shopbuisnessfacadebean.module.classpath"/>
+            <src refid="shopbuisnessfacadebean.module.sourcepath"/>
+        </javac>
+
+        <copy todir="${shopbuisnessfacadebean.output.dir}">
+            <fileset dir="${application.root.dir}/ShopBuisnessFacadeBean/src">
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.shopbuisnessfacadebean.tests"
+            depends="compile.module.shopbuisnessfacadebean.production"
+            description="compile module ShopBuisnessFacadeBean; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.shopbuisnessfacadebean" description="cleanup module">
+        <delete dir="${shopbuisnessfacadebean.output.dir}"/>
+        <delete dir="${shopbuisnessfacadebean.testoutput.dir}"/>
+    </target>
+
+    <property name="shopbuisnessfacadebean.path.jar"
+              value="${application.root.dir}/ShopBuisnessFacadeBean.jar"/>
+    <target name="j2ee.build.shopbuisnessfacadebean" depends="compile.module.shopbuisnessfacadebean"
+            description="Build configured Java EE directories and archives for module 'ShopBuisnessFacadeBean'">
+        <antcall target="j2ee.build.jar.shopbuisnessfacadebean">
+            <param name="j2ee.path.jar" value="${shopbuisnessfacadebean.path.jar}"/>
+        </antcall>
+    </target>
+
+    <!-- Call the target to build exploded directory for module 'ShopBuisnessFacadeBean'.
+Path to the exploded directory is specified by parameter 'j2ee.dir.exploded' -->
+    <target name="j2ee.build.exploded.shopbuisnessfacadebean"
+            description="Build exploded directory for module 'ShopBuisnessFacadeBean'">
+        <copy file="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/weblogic-ejb-jar.xml"
+              tofile="${j2ee.dir.exploded}/META-INF/weblogic-ejb-jar.xml"/>
+        <copy file="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/weblogic-cmp-rdbms-jar.xml"
+              tofile="${j2ee.dir.exploded}/META-INF/weblogic-cmp-rdbms-jar.xml"/>
+        <copy file="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/ejb-jar.xml"
+              tofile="${j2ee.dir.exploded}/META-INF/ejb-jar.xml"/>
+        <copy todir="${j2ee.dir.exploded}/">
+            <fileset dir="${application.root.dir}/classes/production/ShopBuisnessFacadeBean"/>
+        </copy>
+    </target>
+
+    <!-- Call the target to build jar archive for module 'ShopBuisnessFacadeBean'.
+Path to the archive file is specified by parameter 'j2ee.path.jar' -->
+    <target name="j2ee.build.jar.shopbuisnessfacadebean"
+            description="Build Java EE archive for module 'ShopBuisnessFacadeBean'">
+        <dirname property="jar.dir" file="${j2ee.path.jar}"/>
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${j2ee.path.jar}" duplicate="preserve">
+            <manifest>
+                <attribute name="Created-By" value="IntelliJ IDEA"/>
+                <attribute name="Manifest-Version" value="1.0"/>
+
+                <attribute name="Classpath"
+                           value="${application.root.dir}/classes/production/ShopBuisnessFacadeBean/META-INF/lib"/>
+
+            </manifest>
+            <zipfileset dir="${application.root.dir}/classes/production/ShopBuisnessFacadeBean"
+                        prefix=""/>
+
+            <!--<zipfileset dir="${application.root.dir}/ShopBuisnessFacadeBean/META-INF" prefix="META-INF"/>-->
+
+            <zipfileset file="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/ejb-jar.xml"
+                        prefix="META-INF"/>
+            <zipfileset
+                    file="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/weblogic-cmp-rdbms-jar.xml"
+                    prefix="META-INF"/>
+            <zipfileset
+                    file="${application.root.dir}/ShopBuisnessFacadeBean/META-INF/weblogic-ejb-jar.xml"
+                    prefix="META-INF"/>
+        </jar>
+    </target>
+
+
+    <!-- Module WebModule -->
+
+    <property name="compiler.args.webmodule" value="${compiler.args}"/>
+
+    <property name="webmodule.output.dir" value="${application.root.dir}/classes/production/WebModule"/>
+    <property name="webmodule.testoutput.dir" value="${application.root.dir}/classes/test/WebModule"/>
+
+    <path id="webmodule.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="webmodule.module.classpath">
+        <fileset dir="${application.root.dir}/WebModule/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+        <!--<pathelement location="${application.root.dir}/WebModule/WEB-INF/lib/*.jar"/>-->
+        <!--<pathelement location="${application.root.dir}/WebModule/WEB-INF/lib/jstl.jar"/>-->
+        <!--<pathelement location="${application.root.dir}/WebModule/WEB-INF/lib/standard.jar"/>-->
+        <!--<pathelement location="${application.root.dir}/WebModule/WEB-INF/lib/j2ee.jar"/>-->
+    </path>
+
+
+    <path id="webmodule.module.sourcepath">
+        <dirset dir="${application.root.dir}/WebModule">
+            <include name="src"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.webmodule" depends="compile.module.webmodule.production,compile.module.webmodule.tests"
+            description="Compile module WebModule"/>
+
+    <target name="compile.module.webmodule.production" description="Compile module WebModule; production classes">
+        <mkdir dir="${webmodule.output.dir}"/>
+        <javac destdir="${webmodule.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
+               memorymaximumsize="${compiler.max.memory}" fork="true">
+            <compilerarg line="${compiler.args.webmodule}"/>
+            <bootclasspath refid="webmodule.module.bootclasspath"/>
+            <classpath refid="webmodule.module.classpath"/>
+            <src refid="webmodule.module.sourcepath"/>
+        </javac>
+
+        <copy todir="${webmodule.output.dir}">
+            <fileset dir="${application.root.dir}/WebModule/src">
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.webmodule.tests" depends="compile.module.webmodule.production"
+            description="compile module WebModule; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.webmodule" description="cleanup module">
+        <delete dir="${webmodule.output.dir}"/>
+        <delete dir="${webmodule.testoutput.dir}"/>
+    </target>
+
+    <property name="webmodule.path.jar" value="${application.root.dir}/WebModule.war"/>
+    <target name="j2ee.build.webmodule" depends="compile.module.webmodule"
+            description="Build configured Java EE directories and archives for module 'WebModule'">
+        <antcall target="j2ee.build.jar.webmodule">
+            <param name="j2ee.path.jar" value="${webmodule.path.jar}"/>
+        </antcall>
+    </target>
+
+    <!-- Call the target to build exploded directory for module 'WebModule'.
+Path to the exploded directory is specified by parameter 'j2ee.dir.exploded' -->
+    <target name="j2ee.build.exploded.webmodule" description="Build exploded directory for module 'WebModule'">
+        <copy file="${application.root.dir}/WebModule/WEB-INF/weblogic.xml"
+              tofile="${j2ee.dir.exploded}/WEB-INF/weblogic.xml"/>
+        <copy file="${application.root.dir}/WebModule/WEB-INF/web.xml"
+              tofile="${j2ee.dir.exploded}/WEB-INF/web.xml"/>
+
+
+        <!--<copy file="${application.root.dir}/WebModule/WEB-INF/lib/standard.jar"-->
+        <!--tofile="${j2ee.dir.exploded}/WEB-INF/lib/standard.jar"/>-->
+        <!--<copy file="${application.root.dir}/WebModule/WEB-INF/lib/jstl.jar"-->
+        <!--tofile="${j2ee.dir.exploded}/WEB-INF/lib/jstl.jar"/>-->
+
+
+        <copy todir="${j2ee.dir.exploded}/WEB-INF/lib}">
+            <fileset dir="${application.root.dir}/WebModule/WEB-INF/lib">
+                <type type="file"/>
+            </fileset>
+
+        </copy>
+
+
+        <copy todir="${j2ee.dir.exploded}/WEB-INF">
+            <fileset dir="${application.root.dir}/WebModule/WEB-INF"/>
+        </copy>
+        <copy todir="${j2ee.dir.exploded}/">
+            <fileset dir="${application.root.dir}/WebModule/resources"/>
+        </copy>
+        <copy todir="${j2ee.dir.exploded}/WEB-INF/classes">
+            <fileset dir="${application.root.dir}/classes/production/WebModule"/>
+        </copy>
+    </target>
+
+    <!-- Call the target to build war archive for module 'WebModule'.
+Path to the archive file is specified by parameter 'j2ee.path.jar' -->
+    <target name="j2ee.build.jar.webmodule" description="Build Java EE archive for module 'WebModule'">
+        <dirname property="jar.dir" file="${j2ee.path.jar}"/>
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${j2ee.path.jar}" duplicate="preserve">
+            <manifest>
+                <attribute name="Created-By" value="IntelliJ IDEA"/>
+                <attribute name="Manifest-Version" value="1.0"/>
+            </manifest>
+            <zipfileset dir="${application.root.dir}/classes/production/WebModule" prefix="WEB-INF/classes"/>
+            <zipfileset dir="${application.root.dir}/WebModule/resources" prefix=""/>
+            <zipfileset dir="${application.root.dir}/WebModule/WEB-INF" prefix="WEB-INF"/>
+            <!--<zipfileset file="${application.root.dir}/WebModule/WEB-INF/lib/jstl.jar" prefix="WEB-INF/lib"/>-->
+            <!--<zipfileset file="${application.root.dir}/WebModule/WEB-INF/lib/standard.jar" prefix="WEB-INF/lib"/>-->
+            <!--<zipfileset file="${application.root.dir}/WebModule/WEB-INF/lib" prefix="WEB-INF"/>-->
+
+            <!--<zipfileset file="${application.root.dir}/WebModule/WEB-INF/web.xml" prefix="WEB-INF"/>-->
+            <!--<zipfileset file="${application.root.dir}/WebModule/WEB-INF/weblogic.xml" prefix="WEB-INF"/>-->
+        </jar>
+    </target>
+
+
+    <!-- Module ApplicationShop -->
+
+    <dirname property="application.root.dir" file="${ant.file}"/>
+
+
+    <target name="compile.module.applicationshop"
+            depends="compile.module.applicationshop.production,compile.module.applicationshop.tests"
+            description="Compile module ApplicationShop"/>
+
+    <target name="compile.module.applicationshop.production"
+            depends="compile.module.shopbuisnessfacadebean,compile.module.webmodule"
+            description="Compile module ApplicationShop; production classes"/>
+
+    <target name="compile.module.applicationshop.tests" depends="compile.module.applicationshop.production"
+            description="compile module ApplicationShop; test classes" unless="skip.tests"/>
+
+    <target name="clean.module.applicationshop" description="cleanup module"/>
+
+    <property name="applicationshop.path.jar" value="${bea.weblogic.autodeploy.dir}/${ear.application.filename}"/>
+    <target name="j2ee.build.applicationshop" depends="j2ee.build.shopbuisnessfacadebean, j2ee.build.webmodule"
+            description="Build configured Java EE directories and archives for module 'ApplicationShop'">
+        <antcall target="j2ee.build.jar.applicationshop">
+            <param name="j2ee.path.jar" value="${applicationshop.path.jar}"/>
+        </antcall>
+    </target>
+
+    <!-- Call the target to build exploded directory for module 'ApplicationShop'.
+Path to the exploded directory is specified by parameter 'j2ee.dir.exploded' -->
+    <target name="j2ee.build.exploded.applicationshop"
+            description="Build exploded directory for module 'ApplicationShop'">
+        <copy file="${application.root.dir}/ApplicationShop/META-INF/weblogic-application.xml"
+              tofile="${j2ee.dir.exploded}/META-INF/weblogic-application.xml"/>
+        <copy file="${application.root.dir}/ApplicationShop/META-INF/application.xml"
+              tofile="${j2ee.dir.exploded}/META-INF/application.xml"/>
+        <antcall target="j2ee.build.exploded.webmodule">
+            <param name="j2ee.dir.exploded" value="${j2ee.dir.exploded}/WebModule.war"/>
+        </antcall>
+        <antcall target="j2ee.build.exploded.shopbuisnessfacadebean">
+            <param name="j2ee.dir.exploded" value="${j2ee.dir.exploded}/ShopBuisnessFacadeBean.jar"/>
+        </antcall>
+    </target>
+
+    <!-- Call the target to build ear archive for module 'ApplicationShop'.
+Path to the archive file is specified by parameter 'j2ee.path.jar' -->
+    <target name="j2ee.build.jar.applicationshop" description="Build Java EE archive for module 'ApplicationShop'">
+        <dirname property="jar.dir" file="${j2ee.path.jar}"/>
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${j2ee.path.jar}" duplicate="preserve">
+            <manifest>
+                <attribute name="Created-By" value="IntelliJ IDEA"/>
+                <attribute name="Manifest-Version" value="1.0"/>
+            </manifest>
+            <zipfileset file="${shopbuisnessfacadebean.path.jar}" prefix=""/>
+            <zipfileset file="${webmodule.path.jar}" prefix=""/>
+            <zipfileset file="${application.root.dir}/ApplicationShop/META-INF/application.xml"
+                        prefix="META-INF"/>
+            <zipfileset file="${application.root.dir}/ApplicationShop/META-INF/weblogic-application.xml"
+                        prefix="META-INF"/>
+        </jar>
+    </target>
+
+    <target name="init" description="Build initialization">
+        <!-- Perform any build initialization in this target -->
+    </target>
+
+    <target name="clean"
+            depends="clean.module.shopbuisnessfacadebean, clean.module.webmodule, clean.module.applicationshop"
+            description="cleanup all"/>
+    <!--<target name="all"-->
+    <!--depends="init, clean,-->
+    <!--j2ee.build.webmodule, j2ee.build.applicationshop"-->
+    <!--description="build all"/>-->
+
+    <!--<target name="all"-->
+    <!--depends="init, clean, renew.bean.interfaces, j2ee.build.shopbuisnessfacadebean,-->
+    <!--j2ee.build.webmodule,-->
+    <!--j2ee.build.applicationshop"-->
+    <!--description="build all"/>-->
+    <target name="all"
+            depends="init, clean,
+            j2ee.build.shopbuisnessfacadebean,
+        
+            j2ee.build.applicationshop"
+            description="build all"/>
+</project>
